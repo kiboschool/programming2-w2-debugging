@@ -1,5 +1,5 @@
 class Jukebox:
-    def __init__(shelf, songs):
+    def __init__(self, songs):
         self.songs = songs
         self.current_song = 0
         self.is_playing = False
@@ -8,13 +8,17 @@ class Jukebox:
         self.is_playing = True
 
     def pause(self):
-        self.is_playing == False
+        self.is_playing = False
 
     def next(self):
         self.current_song += 1
+        self.current_song = self.current_song % len(self.songs)
 
     def previous(self):
-        self.current_song -= 1
+        if self.current_song == 0:
+            self.current_song = len(self.songs) - 1
+        else:
+            self.current_song -= 1
 
     def current_state(self):
         if self.is_playing:
@@ -23,4 +27,5 @@ class Jukebox:
             return "Paused"
 
     def copy_song_list(self):
-        return self.songs
+        import copy
+        return copy.deepcopy(self.songs)
